@@ -96,7 +96,7 @@ class CassandraSessionHandler implements \SessionHandlerInterface
     {
         $blobSessionId = new \Cassandra\Blob($sessionId);
         $result = $this->getSession()->execute($this->preparedStatements['destroy'],
-            new \Cassandra\ExecutionOptions(array('arguments' => array($blobSessionId)))
+            array('arguments' => array($blobSessionId))
         );
 
         return true;
@@ -119,9 +119,9 @@ class CassandraSessionHandler implements \SessionHandlerInterface
         $nowTimestamp = new \Cassandra\Timestamp();
         $blobSessionId = new \Cassandra\Blob($sessionId);
         $result = $this->getSession()->execute($this->preparedStatements['write'],
-            new \Cassandra\ExecutionOptions(array('arguments' => array(
+            array('arguments' => array(
                 $blobData, $nowTimestamp, $blobSessionId
-            )))
+            ))
         );
 
         return true;
@@ -134,7 +134,7 @@ class CassandraSessionHandler implements \SessionHandlerInterface
     {
         $blobSessionId = new \Cassandra\Blob($sessionId);
         $result = $this->getSession()->execute($this->preparedStatements['read'],
-            new \Cassandra\ExecutionOptions(array('arguments' => array($blobSessionId)))
+            array('arguments' => array($blobSessionId))
         );
         if (null !== ($sessionData = $result->first())) {
             $data = $sessionData[$this->options['data_field']];
