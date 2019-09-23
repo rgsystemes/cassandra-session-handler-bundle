@@ -47,7 +47,7 @@ class Cluster implements ClusterInterface
         // comma-separated node host names / IP addresses
         $contactPoints = $this->container->getParameter('cassandra_cluster.contact_points');
         if (!is_array($contactPoints)) {
-            $contactPoints = implode($contactPoints, ',');
+            $contactPoints = explode(',', $contactPoints);
             foreach ($contactPoints as &$contactPoint) {
               $contactPoint = trim($contactPoint);
             }
