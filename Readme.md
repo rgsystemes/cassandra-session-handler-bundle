@@ -64,7 +64,7 @@ parameters:
     cassandra_cluster.contact_points: '%env(string:CASSANDRA_CLUSTER_HOSTS)%'
 ```
 
-```txt
+```bash
 # .env.local
 CASSANDRA_CLUSTER_HOSTS=10.0.0.1,10.0.0.2,10.0.0.3
 ```
