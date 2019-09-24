@@ -1,6 +1,6 @@
 # Cassandra Session Handler bundle #
 
-This Symfony 2 bundle provides a session handler for saving sessions in Cassandra.
+This Symfony 2/4 bundle provides a session handler for saving sessions in Cassandra.
 
 ## Installation
 
@@ -56,6 +56,20 @@ This Symfony 2 bundle provides a session handler for saving sessions in Cassandr
         cassandra_cluster.credentials.username: cassandra
         cassandra_cluster.credentials.password: cassandra
 ```
+
+In Symfony 4, you can use an environnement variable which contains comma-separated values as a string : 
+```yml
+# services.yaml
+parameters: 
+    cassandra_cluster.contact_points: '%env(string:CASSANDRA_CLUSTER_HOSTS)%'
+```
+
+```bash
+# .env.local
+CASSANDRA_CLUSTER_HOSTS=10.0.0.1,10.0.0.2,10.0.0.3
+```
+
+
 Then run `composer install` again or update your `parameters.yml` by hand.
 
 6. Don't forget to actually create the keyspace and the column family. An example of the CQL that's needed can be found in `Resources/doc/create_session_keyspace_and_table.sql` inside this bundle.
