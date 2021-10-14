@@ -70,17 +70,14 @@ class CassandraSessionHandler implements \SessionHandlerInterface
         $this->logger = $logger ?: new NullLogger();
     }
 
-    public function setUp()
-    {
-        $this->connectToCluster();
-        $this->prepareStatements();
-    }
-
     /**
      * {@inheritdoc}
      */
     public function open($savePath, $sessionName)
     {
+        $this->connectToCluster();
+        $this->prepareStatements();
+
         return true;
     }
 

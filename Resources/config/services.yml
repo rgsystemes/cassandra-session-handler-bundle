@@ -1,13 +1,8 @@
 parameters:
   cassandra_session_handler.class: Alfatraining\CassandraSessionHandlerBundle\Lib\Session\Storage\Handler\CassandraSessionHandler
   cassandra_cluster.class: Alfatraining\CassandraSessionHandlerBundle\Lib\Cassandra\Cluster
-  cassandra_session_event_subscriber.class: Alfatraining\CassandraSessionHandlerBundle\Lib\EventSubscriber\CassandraSessionEventSubscriber
 
 services:
-  _defaults:
-    autoconfigure: true
-    autowire: true
-    public: false
   alfatraining_cassandra_session_handler.cassandra_cluster:
     class: '%cassandra_cluster.class%'
     arguments:
@@ -18,7 +13,3 @@ services:
       - '@alfatraining_cassandra_session_handler.cassandra_cluster'
       - { keyspace: "%cassandra_session_handler_keyspace%", column_family: "%cassandra_session_handler_column_family%", session_lifetime: '%cassandra_session_handler_session_lifetime%' }
       - '@logger'
-  alfatraining_cassandra_session_handler.cassandra_session_event_subscriber:
-    class: '%cassandra_session_event_subscriber.class%'
-    arguments:
-      - '@alfatraining_cassandra_session_handler.cassandra_session_handler'
