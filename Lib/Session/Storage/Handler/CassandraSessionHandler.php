@@ -158,7 +158,6 @@ class CassandraSessionHandler implements \SessionHandlerInterface
      * Return a Cassandra cluster instance.
      *
      * @return \Cassandra\Cluster
-     
      */
     protected function getCluster()
     {
