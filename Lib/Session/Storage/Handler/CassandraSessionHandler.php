@@ -158,6 +158,7 @@ class CassandraSessionHandler implements \SessionHandlerInterface
      * Return a Cassandra cluster instance.
      *
      * @return \Cassandra\Cluster
+     
      */
     protected function getCluster()
     {
@@ -193,6 +194,14 @@ class CassandraSessionHandler implements \SessionHandlerInterface
      */
     protected function connectToCluster()
     {
-        $this->session = $this->getCluster()->connect($this->options['keyspace']);
+        $cluster = $this->getCluster();
+        
+        if (isset($this->options['local_dc']))
+            $cluster->withDatacenterAwareRoundRobinLoadBalancingPolicy($this->options['local_dc'], 2, true);
+
+        $this->session = $cluster
+            // ->withDefaultConsistency(Cassandra::CONSISTENCY_LOCAL_QUORUM)
+            ->connect($this->options['keyspace'])
+        ;
     }
 }
