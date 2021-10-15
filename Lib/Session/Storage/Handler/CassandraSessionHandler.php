@@ -68,9 +68,6 @@ class CassandraSessionHandler implements \SessionHandlerInterface
             'time_field' => 'time',
         ), $options);
         $this->logger = $logger ?: new NullLogger();
-
-        $this->connectToCluster();
-        $this->prepareStatements();
     }
 
     /**
@@ -78,6 +75,9 @@ class CassandraSessionHandler implements \SessionHandlerInterface
      */
     public function open($savePath, $sessionName)
     {
+        $this->connectToCluster();
+        $this->prepareStatements();
+
         return true;
     }
 

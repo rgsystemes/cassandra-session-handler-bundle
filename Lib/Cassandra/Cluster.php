@@ -70,6 +70,11 @@ class Cluster implements ClusterInterface
             $cluster->withCredentials($username, $password);
         }
 
+        if ($this->container->hasParameter('cassandra_cluster.local_dc') &&
+            $localDc = $this->container->getParameter('cassandra_cluster.local_dc')) {
+            $cluster->withDatacenterAwareRoundRobinLoadBalancingPolicy($localDc, 2, true);
+        }
+
         $this->cluster = $cluster->build();
     }
 
