@@ -17,8 +17,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('alfatraining_cassandra_session_handler');
+        $treeBuilder = new TreeBuilder('alfatraining_cassandra_session_handler');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode->canBeUnset()->children()
             ->scalarNode('keyspace')->defaultValue("symfony2_sessions")->end()
