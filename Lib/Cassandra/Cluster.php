@@ -49,7 +49,7 @@ class Cluster implements ClusterInterface
         if (!is_array($contactPoints)) {
             $contactPoints = explode(',', $contactPoints);
             foreach ($contactPoints as &$contactPoint) {
-              $contactPoint = trim($contactPoint);
+                $contactPoint = trim($contactPoint);
             }
         }
 
@@ -63,15 +63,19 @@ class Cluster implements ClusterInterface
 
         $cluster->withPersistentSessions(true); // always use persistent connections but be explicit about it
 
-        if ($this->container->hasParameter('cassandra_cluster.credentials.username') &&
-           $this->container->hasParameter('cassandra_cluster.credentials.password')) {
+        if (
+            $this->container->hasParameter('cassandra_cluster.credentials.username') &&
+            $this->container->hasParameter('cassandra_cluster.credentials.password')
+        ) {
             $username = $this->container->getParameter('cassandra_cluster.credentials.username');
             $password = $this->container->getParameter('cassandra_cluster.credentials.password');
             $cluster->withCredentials($username, $password);
         }
 
-        if ($this->container->hasParameter('cassandra_cluster.local_dc') &&
-            $localDc = $this->container->getParameter('cassandra_cluster.local_dc')) {
+        if (
+            $this->container->hasParameter('cassandra_cluster.local_dc') &&
+            $localDc = $this->container->getParameter('cassandra_cluster.local_dc')
+        ) {
             $cluster->withDatacenterAwareRoundRobinLoadBalancingPolicy($localDc, 2, true);
         }
 
@@ -83,11 +87,11 @@ class Cluster implements ClusterInterface
      *
      * @return \Cassandra\Session
      */
-    public function connect($keyspace = null)
+    public function connect($keyspace = null, $timeout = null)
     {
         $this->logger->debug('Connecting this cluster instance synchronously to keyspace '.(string)$keyspace);
 
-        return $this->cluster->connect($keyspace);
+        return $this->cluster->connect($keyspace, $timeout);
     }
 
     /**

@@ -4,9 +4,9 @@
     "keywords": ["symfony", "bundle", "datastax", "cassandra", "session"],
     "type": "library",
     "require": {
-        "php": ">=5.3.4",
+        "php": ">=8.0.0",
         "datastax/php-driver": "^1.0",
-        "symfony/framework-bundle": "~2.1|~3.0|^4.0",
+        "symfony/framework-bundle": "^4.2",
         "psr/log": "^1.0"
     },
     "license": "MIT",

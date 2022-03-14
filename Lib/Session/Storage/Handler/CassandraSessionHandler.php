@@ -59,7 +59,6 @@ class CassandraSessionHandler implements \SessionHandlerInterface
         if (!isset($options['keyspace']) || !isset($options['column_family']) || !isset($options['session_lifetime'])) {
             throw new \InvalidArgumentException('You must provide the "keyspace", "column_family" and "session_lifetime" option for CassandraSessionHandler');
         }
-        $this->options['session_lifetime'] = intval($this->options['session_lifetime'], 10);
 
         $this->cluster = $cluster;
         $this->options = array_merge(array(
@@ -70,10 +69,7 @@ class CassandraSessionHandler implements \SessionHandlerInterface
         $this->logger = $logger ?: new NullLogger();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function open($savePath, $sessionName)
+    public function open(string $path, string $name): bool
     {
         $this->connectToCluster();
         $this->prepareStatements();
@@ -81,20 +77,14 @@ class CassandraSessionHandler implements \SessionHandlerInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function close()
+    public function close(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function destroy($sessionId)
+    public function destroy(string $id): bool
     {
-        $blobSessionId = new \Cassandra\Blob($sessionId);
+        $blobSessionId = new \Cassandra\Blob($id);
         $result = $this->getSession()->execute($this->preparedStatements['destroy'],
             array('arguments' => array($blobSessionId))
         );
@@ -102,22 +92,16 @@ class CassandraSessionHandler implements \SessionHandlerInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function gc($maxlifetime)
+    public function gc(int $max_lifetime): int|false
     {
-        return true;
+        return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function write($sessionId, $data)
+    public function write(string $id, string $data): bool
     {
         $blobData = new \Cassandra\Blob($data);
-        $nowTimestamp = new \Cassandra\Timestamp();
-        $blobSessionId = new \Cassandra\Blob($sessionId);
+        $nowTimestamp = new \Cassandra\Timestamp(0, 0);
+        $blobSessionId = new \Cassandra\Blob($id);
         $result = $this->getSession()->execute($this->preparedStatements['write'],
             array('arguments' => array(
                 $blobData, $nowTimestamp, $blobSessionId
@@ -127,12 +111,9 @@ class CassandraSessionHandler implements \SessionHandlerInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function read($sessionId)
+    public function read(string $id): string|false
     {
-        $blobSessionId = new \Cassandra\Blob($sessionId);
+        $blobSessionId = new \Cassandra\Blob($id);
         $result = $this->getSession()->execute($this->preparedStatements['read'],
             array('arguments' => array($blobSessionId))
         );
