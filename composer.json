@@ -1,11 +1,12 @@
 {
     "name": "alfatraining/cassandra-session-handler-bundle",
-    "description": "Cassandra Session Handler Bundle for Symfony 2",
+    "description": "Cassandra Session Handler Bundle for Symfony 4",
     "keywords": ["symfony", "bundle", "datastax", "cassandra", "session"],
     "type": "library",
     "require": {
         "php": ">=8.0.0",
-        "datastax/php-driver": "^1.0",
+        "ext-cassandra": ">=1.4.0",
+        "datastax/php-driver": "^1.4",
         "symfony/framework-bundle": "^4.2",
         "psr/log": "^1.0"
     },
@@ -23,5 +24,11 @@
     "autoload": {
       "classmap": ["Lib/"],
       "psr-4": { "Alfatraining\\CassandraSessionHandlerBundle\\": "" }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://github.com/rgsystemes/php-driver"
+        }
+    ]
 }
