@@ -1,6 +1,6 @@
 # Cassandra Session Handler bundle #
 
-This Symfony 2/4 bundle provides a session handler for saving sessions in Cassandra.
+This Symfony 4 bundle provides a session handler for saving sessions in Cassandra.
 
 ## Installation
 
