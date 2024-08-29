@@ -79,6 +79,13 @@ class Cluster implements ClusterInterface
             $cluster->withDatacenterAwareRoundRobinLoadBalancingPolicy($localDc, 2, true);
         }
 
+        if (
+            $this->container->hasParameter('cassandra_cluster.token_aware_routing') &&
+            $this->container->getParameter('cassandra_cluster.token_aware_routing')
+        ) {
+            $cluster->withTokenAwareRouting(true);
+        }
+
         $this->cluster = $cluster->build();
     }
 
