@@ -100,7 +100,7 @@ class CassandraSessionHandler implements \SessionHandlerInterface
     public function write(string $id, string $data): bool
     {
         $blobData = new \Cassandra\Blob($data);
-        $nowTimestamp = new \Cassandra\Timestamp(0, 0);
+        $nowTimestamp = new \Cassandra\Timestamp();
         $blobSessionId = new \Cassandra\Blob($id);
         $result = $this->getSession()->execute($this->preparedStatements['write'],
             array('arguments' => array(
