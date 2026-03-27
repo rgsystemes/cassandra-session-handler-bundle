@@ -1,14 +1,14 @@
 {
     "name": "alfatraining/cassandra-session-handler-bundle",
-    "description": "Cassandra Session Handler Bundle for Symfony 4",
+    "description": "Cassandra Session Handler Bundle for Symfony 4 & 5.4",
     "keywords": ["symfony", "bundle", "datastax", "cassandra", "session"],
     "type": "library",
     "require": {
-        "php": ">=8.0.0",
+        "php": ">=8.0.2",
         "ext-cassandra": ">=1.4.0",
         "datastax/php-driver": "^1.4",
-        "symfony/framework-bundle": "^4.2",
-        "psr/log": "^1.0"
+        "symfony/framework-bundle": "^4.2 || ^5.4",
+        "psr/log": "^1.0 || ^2.0 || ^3.0"
     },
     "license": "MIT",
     "authors": [
